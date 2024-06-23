@@ -12,7 +12,7 @@ pipeline{
     stages{
         stage('init'){
             steps{
-                sh 'cd 044/solution/terraform/'
+                sh 'cd daws-jenkins/044/solution/terraform/'
                 sh 'terraform init -reconfigure'
             }
             when {
@@ -21,7 +21,7 @@ pipeline{
         }
         stage('plan'){
             steps{
-                sh 'cd 044/solution/terraform/'
+                sh 'cd daws-jenkins/044/solution/terraform/'
                 sh 'terraform plan'
             }
             when {
@@ -37,7 +37,7 @@ pipeline{
                 expression { params.command == "Apply"}
             }
             steps{
-                sh 'cd 044/solution/terraform/'
+                sh 'cd daws-jenkins/044/solution/terraform/'
                 sh 'terraform apply -auto-approve'
             }
         }
@@ -50,7 +50,7 @@ pipeline{
                 expression { params.command == "Destroy"}
             }
             steps{
-                sh 'cd 044/solution/terraform/'
+                sh 'cd daws-jenkins/044/solution/terraform/'
                 sh 'terraform destroy -auto-approve'
             }
         }
