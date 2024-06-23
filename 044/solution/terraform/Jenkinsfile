@@ -5,6 +5,9 @@ pipeline{
     options{
         timeout(time: 30, unit: 'MINUTES')
     }
+    parameters {
+        choice(name: 'command', choices: ['Apply', 'Destroy'], description: 'Pick something')
+    }
     stages{
         stage('init'){
             sh 'terraform init -reconfigure'
@@ -13,9 +16,23 @@ pipeline{
             sh 'terraform plan'
         }
         stage('apply'){
+            input {
+                message "Should we continue with apply command?"
+                ok "Yes, we should."
+            }
+            when {
+                expression { ${param.choice} == "Apply"}
+            }
             sh 'terraform apply -auto-approve'
         }
         stage('destroy'){
+            input {
+                message "Should we continue with destroy command?"
+                ok "Yes, we should."
+            }
+            when {
+                expression { ${param.choice} == "Destroy"}
+            }
             sh 'terraform destroy -auto-approve'
         }
     }
@@ -27,7 +44,7 @@ pipeline{
 
         }
         always{
-
+            deleteDir()
         }
     }
 }
