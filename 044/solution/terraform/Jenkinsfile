@@ -10,10 +10,14 @@ pipeline{
     }
     stages{
         stage('init'){
-            sh 'terraform init -reconfigure'
+            steps{
+                sh 'terraform init -reconfigure'
+            }
         }
         stage('plan'){
-            sh 'terraform plan'
+            steps{
+                sh 'terraform plan'
+            }
         }
         stage('apply'){
             input {
@@ -23,7 +27,9 @@ pipeline{
             when {
                 expression { ${param.choice} == "Apply"}
             }
-            sh 'terraform apply -auto-approve'
+            steps{
+                sh 'terraform apply -auto-approve'
+            }
         }
         stage('destroy'){
             input {
@@ -33,15 +39,17 @@ pipeline{
             when {
                 expression { ${param.choice} == "Destroy"}
             }
-            sh 'terraform destroy -auto-approve'
+            steps{
+                sh 'terraform destroy -auto-approve'
+            }
         }
     }
     post{
         success{
-
+            echo 'SUCCESS'
         }
-        failure{
-
+        failure{    
+            echo 'FAILED'
         }
         always{
             deleteDir()
