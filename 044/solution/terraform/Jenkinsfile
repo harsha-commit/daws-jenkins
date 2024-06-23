@@ -4,6 +4,7 @@ pipeline{
     }
     options{
         timeout(time: 30, unit: 'MINUTES')
+        ansiColor('xterm')
     }
     parameters {
         choice(name: 'command', choices: ['Apply', 'Destroy'], description: 'Pick something')
@@ -11,6 +12,7 @@ pipeline{
     stages{
         stage('init'){
             steps{
+                sh 'cd 044/solution/terraform/'
                 sh 'terraform init -reconfigure'
             }
             when {
@@ -19,6 +21,7 @@ pipeline{
         }
         stage('plan'){
             steps{
+                sh 'cd 044/solution/terraform/'
                 sh 'terraform plan'
             }
             when {
@@ -34,6 +37,7 @@ pipeline{
                 expression { params.command == "Apply"}
             }
             steps{
+                sh 'cd 044/solution/terraform/'
                 sh 'terraform apply -auto-approve'
             }
         }
@@ -46,6 +50,7 @@ pipeline{
                 expression { params.command == "Destroy"}
             }
             steps{
+                sh 'cd 044/solution/terraform/'
                 sh 'terraform destroy -auto-approve'
             }
         }
