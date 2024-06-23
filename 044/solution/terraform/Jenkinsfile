@@ -14,7 +14,7 @@ pipeline{
                 sh 'terraform init -reconfigure'
             }
             when {
-                expression { ${param.command} == "Apply"}
+                expression { params.command == "Apply"}
             }
         }
         stage('plan'){
@@ -22,7 +22,7 @@ pipeline{
                 sh 'terraform plan'
             }
             when {
-                expression { ${param.command} == "Apply"}
+                expression { params.command == "Apply"}
             }
         }
         stage('apply'){
@@ -31,7 +31,7 @@ pipeline{
                 ok "Yes, we should."
             }
             when {
-                expression { ${param.command} == "Apply"}
+                expression { params.command == "Apply"}
             }
             steps{
                 sh 'terraform apply -auto-approve'
@@ -43,7 +43,7 @@ pipeline{
                 ok "Yes, we should."
             }
             when {
-                expression { ${param.command} == "Destroy"}
+                expression { params.command == "Destroy"}
             }
             steps{
                 sh 'terraform destroy -auto-approve'
