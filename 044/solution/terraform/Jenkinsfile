@@ -4,6 +4,7 @@ pipeline{
     }
     options{
         timeout(time: 30, unit: 'MINUTES')
+        ansiColor('xterm')
     }
     parameters {
         choice(name: 'command', choices: ['Apply', 'Destroy'], description: 'Pick something')
