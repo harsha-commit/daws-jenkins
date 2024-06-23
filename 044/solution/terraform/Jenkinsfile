@@ -1,0 +1,33 @@
+pipeline{
+    agent{
+        label 'AGENT-1'
+    }
+    options{
+        timeout(time: 30, unit: 'MINUTES')
+    }
+    stages{
+        stage('init'){
+            sh 'terraform init -reconfigure'
+        }
+        stage('plan'){
+            sh 'terraform plan'
+        }
+        stage('apply'){
+            sh 'terraform apply -auto-approve'
+        }
+        stage('destroy'){
+            sh 'terraform destroy -auto-approve'
+        }
+    }
+    post{
+        success{
+
+        }
+        failure{
+
+        }
+        always{
+
+        }
+    }
+}
