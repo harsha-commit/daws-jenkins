@@ -1,0 +1,12 @@
+- Install Jenkins in t3.small, RHEL ec2 instance
+  - Copy jenkins.repo if installation is failed
+- Install Java
+- Start the service and configure
+- Configure Nodes and ignore warnings
+- Create a Job
+  - Create a Freestyle Project (general purpose, builds steps serially)
+  - Add build steps > Execute shell
+  - `echo "Hello Jenkins"`
+  - Save and Run
+
+---
