@@ -1,18 +1,11 @@
 pipeline{
-    
-    agent {
+    agent{
         label 'AGENT-1'
     }
 
-    options{
+    options{ 
+        timeout(time: 15, unit: 'SECONDS')
         disableConcurrentBuilds()
-        options { timeout(time: 10, unit: 'MINUTES') }
-        retry(2)
-    }
-
-    environment{
-        DEPLOY_TO = 'DEV'
-        GREETING = 'Good Morning' 
     }
 
     parameters{
@@ -23,42 +16,38 @@ pipeline{
         password(name: 'PASSWORD', defaultValue: 'SECRET', description: 'Enter a password')
     }
 
+    environment{
+        DEPLOY_TO = 'DEV'
+        GREETING = 'Good Morning' 
+    }
+
     stages{
         stage('Build'){
             steps{
-                echo "Hello from Build"
+                sh 'echo "Hello Build"'
             }
         }
         stage('Test'){
             steps{
-                echo "Hello from Test"
+                sh 'echo "Hello Test"'
             }
         }
         stage('Deploy'){
             steps{
-                echo "Hello from Deploy"
+                sh 'echo "Hello Deploy"'
             }
         }
-        stage('Print Parameters') {
-            steps{
-                echo "Hello ${params.PERSON}"
-                echo "Biography: ${params.BIOGRAPHY}"
-                echo "Toggle: ${params.TOGGLE}"
-                echo "Choice: ${params.CHOICE}"
-                echo "Password: ${params.PASSWORD}"
-            }
-            }
     }
 
     post{
         always{
-            echo 'I will run always'
+            sh 'echo "Hello always"'
         }
         success{
-            echo 'I will run when pipeline is success'
+            sh 'echo "Hello success"'
         }
         failure{
-            echo 'I will run when pipeline is failure'
+            sh 'echo "Hello failure"'
         }
     }
 }
