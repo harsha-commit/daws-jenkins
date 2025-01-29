@@ -8,5 +8,3 @@
   - Add build steps > Execute shell
   - `echo "Hello Jenkins"`
   - Save and Run
-
----
