@@ -1,10 +1,25 @@
-- Install Jenkins in t3.small, RHEL ec2 instance
-  - Copy jenkins.repo if installation is failed
-- Install Java
-- Start the service and configure
-- Configure Nodes and ignore warnings
+- Create an Jenkins Master Instance (t3.small, RHEL ec2 instance)
+  - Copy jenkins.repo if jenkins installation is failed
+- Start the jenkins service and configure
+- Configure Nodes and ignore warnings in monitoring
 - Create a Job
   - Create a Freestyle Project (general purpose, builds steps serially)
   - Add build steps > Execute shell
   - `echo "Hello Jenkins"`
   - Save and Run
+
+---
+
+- Create an Jenkins Agent Instance
+  - Install Java
+- Configure this instance as an agent in Jenkins Server
+- Create a Job
+  - Create a Pipeline Job and include following sections
+    - agent
+    - options (timeout and disableConcurrentBuilds)
+    - parameters (and access them)
+    - environment
+    - input
+    - stages
+    - post
+- Configure a Webhook on a github repo so that upon each commit the pipeline runs

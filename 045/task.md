@@ -1,0 +1,22 @@
+- Using Terraform ready the infrastructure
+    - `for i in 01-vpc/ 02-sg/ 04-db/ 05-vpn/ 06-app-alb/; do cd $i; do terraform apply -auto-approve; cd ..; done`
+- Create Nexus Instance using Terraform
+	- AMI = Nexus Repository OSS on AWS (Subscribe prior to use)
+	- Instance type = t3.medium
+	- Volume Size = 30 GB
+	- Nexus Repository OSS uses ubuntu OS with
+		- username: ubuntu
+		- MUST provide key
+	- Create R53 record with private ip
+	- Login using `ssh -i ~/.ssh/tools ubuntu@<PUBLIC_IP>`
+	- Hit the url at `<nexus_url>:8081`
+	- Create Repository
+		- select maven2 (hosted)
+		- name = backend
+		- Version Policy = Mixed
+		- Layout Policy = Permissive
+		- Deployment Policy = Allow redeploy (same version can be pushed multiple times, but no change (not sure of this))
+- In Jenkins server
+	- Install Nexus Artifact Uploader Plugin
+- Upload the zip file into backend repository
+- Trigger deploy job (to be created) and pass appVersion to it
